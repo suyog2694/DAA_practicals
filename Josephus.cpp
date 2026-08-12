@@ -78,6 +78,23 @@ int linkedList(int n, int k) {
     return last;
 }
 
+int josephus(int n, int k) {
+    if (n == 1) {
+        return 0;
+    }
+    return (josephus(n - 1, k) + k) % n;
+}
+int recursion(int n, int k) {
+    vector<int> arr(n);
+    cout << "Enter the elements of the array : " << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int position = josephus(n, k);
+    return arr[position];
+}
+
 int main(){
     int choice ;
     int n ;
@@ -116,12 +133,15 @@ int main(){
                 cout << "Last element: " << last << endl;
                 break;
             }
-            case 3:
-                // Call the function for Recursion method
+            case 3: {
+                int last = recursion(n, k);
+                cout << "Last element: " << last << endl;
                 break;
-            case 4:
+            }
+            case 4: {
                 // Call the function for Binary Bits method
                 break;
+            }
             default:
                 cout << "Invalid choice." << endl;
         } 
