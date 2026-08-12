@@ -2,7 +2,13 @@
 #include<vector>
 using namespace std;
 
-int arrays(vector<int> arr, int n, int k) {
+int arrays(int n, int k) {
+    vector<int> arr(n) ;
+    cout << "enter the elements of the array : " << endl ;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i] ;
+    }
+
     int i = 0;
     int count = 0;
     int flag = n;
@@ -23,6 +29,53 @@ int arrays(vector<int> arr, int n, int k) {
         i = (i + 1) % n;
     }
     return -1;
+}
+
+int linkedList(int n, int k) {
+    struct Node {
+        int data;
+        Node* next;
+    };
+    Node* head = nullptr;
+    Node* temp = nullptr;
+    cout << "Enter the elements of the linked list : " << endl;
+
+    for (int i = 0; i < n; i++) {
+        Node* newNode = new Node;
+        cin >> newNode->data;
+        newNode->next = nullptr;
+
+        if (head == nullptr) {
+            head = newNode;
+            temp = newNode;
+        }
+        else {
+            temp->next = newNode;
+            temp = newNode;
+        }
+    }
+
+    temp->next = head;
+    Node* current = head;
+    Node* previous = temp;
+
+    int flag = n;
+
+    while (flag > 1) {
+        for (int count = 1; count < k; count++) {
+            previous = current;
+            current = current->next;
+        }
+        cout << "Eliminated: " << current->data << endl;
+
+        previous->next = current->next;
+        delete current;
+        current = previous->next;
+        flag--;
+    }
+    int last = current->data;
+    delete current;
+    return last;
 }
 
 int main(){
@@ -53,27 +106,21 @@ int main(){
 
         switch(choice){
             case 1: {
-                vector<int> arr(n) ;
-                cout << "enter the elements of the array : " << endl ;
-                for (int i = 0; i < n; i++) {
-                    cin >> arr[i] ;
-                }
-                int last = arrays(arr, n, k);
+                int last = arrays(n, k);
                 cout << "Last element: " << last << endl;
                 break;
             }
 
-            case 2:
-                // Call the function for Linked Lists method
+            case 2: {
+                int last = linkedList(n, k);
+                cout << "Last element: " << last << endl;
                 break;
+            }
             case 3:
                 // Call the function for Recursion method
                 break;
             case 4:
                 // Call the function for Binary Bits method
-                break;
-            case 5:
-                cout << "Exiting the program." << endl;
                 break;
             default:
                 cout << "Invalid choice." << endl;
